@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>設備借出單</title>
+  <title>設備/耗材借出單</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
     body { font-family: "Microsoft JhengHei", sans-serif; }
@@ -444,7 +444,7 @@
 
     // 標題在正文（上方空一行）
     children.push(new Paragraph({
-      children: [new TextRun({ text: '設備借出單', bold: true, size: 40 })],
+      children: [new TextRun({ text: '設備/耗材借出單', bold: true, size: 40 })],
       alignment: AlignmentType.CENTER,
       spacing: { before: 276, after: 300 }
     }));
@@ -541,7 +541,7 @@
     const formattedDate = today.toISOString().split('T')[0];
     const rawBorrower = document.getElementById('borrowerNameInput').value || '';
     const safeBorrower = (rawBorrower.trim() || '未填借方').replace(/[\\\/:*?"<>|]/g, '');
-    const fileName = `設備借出單_${safeBorrower}_${formattedDate}.docx`;
+    const fileName = `設備/耗材借出單_${safeBorrower}_${formattedDate}.docx`;
 
     try {
       // 先上傳雲端
@@ -564,3 +564,4 @@
 </script>
 </body>
 </html>
+
