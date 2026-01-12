@@ -484,7 +484,18 @@
       if (qty) line1Parts.push(`數量：${qty}`);
 
       children.push(new Paragraph({
-        children: [new TextRun({ text: line1Parts.join('\t'), size: 26 })]
+        tabStops: [
+          { type: TabStopType.LEFT, position: 0 },     // 類別
+          { type: TabStopType.LEFT, position: 3500 },  // 項目
+          { type: TabStopType.LEFT, position: 7000 },  // 序號
+          { type: TabStopType.LEFT, position: 11000 },  // 數量
+        ],
+        children: [
+          new TextRun({
+            text: line1Parts.join('\t'),
+            size: 26
+          })
+        ]
       }));
     });
 
@@ -505,8 +516,8 @@
       children.push(new Paragraph({
         tabStops: [
           { type: TabStopType.LEFT, position: 0 },
-          { type: TabStopType.LEFT, position: 3300 },
-          { type: TabStopType.LEFT, position: 6600 },
+          { type: TabStopType.LEFT, position: 3000 },
+          { type: TabStopType.LEFT, position: 6000 },
         ],
         children: [new TextRun({ text: footerLineParts.join('\t'), size: 28 })],
         spacing: { before: 300, after: 300 }
@@ -586,5 +597,6 @@
 </script>
 </body>
 </html>
+
 
 
