@@ -497,6 +497,14 @@
       return;
     }
 
+    children.push(new Paragraph({children:[new TextRun({text: '※於借期間如有損壞以致維修或報廢，借方需依損壞情形原價賠償', size: 22 }), ],
+                                 spacing: { before: 400 },
+                                }));
+
+    children.push(new Paragraph({children:[new TextRun({text: '※借方簽收借出單，視為同意上述說明', size: 22, }), ],
+                                 spacing: { after: 600 },
+                                }));
+    
     children.push(new Paragraph({}));
     children.push(new Paragraph({
       tabStops: [
@@ -563,3 +571,4 @@
 </script>
 </body>
 </html>
+
