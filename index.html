@@ -461,9 +461,6 @@
       if (!group) return;
 
       const qty = group.querySelector('.quantity-select')?.value || '';
-      const borrower = group.querySelector('.borrower-select')?.value || '';
-      const borrowDate = group.querySelector('.borrow-date')?.value || '';
-      const returnDate = group.querySelector('.return-date')?.value || '';
 
       count++;
 
@@ -478,16 +475,6 @@
       children.push(new Paragraph({
         children: [new TextRun({ text: line1Parts.join('\t'), size: 26 })]
       }));
-
-      const line2Parts = [];
-      if (borrower) line2Parts.push(`借出人：${borrower}`);
-      if (borrowDate) line2Parts.push(`借出日期：${borrowDate}`);
-      if (returnDate) line2Parts.push(`歸還日期：${returnDate}`);
-
-      children.push(new Paragraph({
-        children: [new TextRun({ text: line2Parts.join('\t'), size: 26 })],
-        spacing: { after: 300 }
-      }));
     });
 
     if (count === 0) {
@@ -497,10 +484,23 @@
       return;
     }
 
+    const firstGroup = container.querySelector('.group');
+    const borrower = group.querySelector('.borrower-select')?.value || '';
+    const borrowDate = group.querySelector('.borrow-date')?.value || '';
+    const returnDate = group.querySelector('.return-date')?.value || '';
+
+    const infoParts = [];
+    if (borrower) infoParts.push(`借出人：${borrower}`);
+    if (borrowDate) infoParts.push(`借出日期：${borrowDate}`);
+    if (returnDate) infoParts.push(`歸還日期：${returnDate}`);
+
+    children.push(new Paragraph({
+      children: [new TextRun({ text: infoParts.join('\t'), size: 26 })]
+    }));    
+
     children.push(new Paragraph({children:[new TextRun({text: '※於借期間如有損壞以致維修或報廢，借方需依損壞情形原價賠償', size: 22 }), ],
                                  spacing: { before: 400 },
                                 }));
-
     children.push(new Paragraph({children:[new TextRun({text: '※借方簽收借出單，視為同意上述說明', size: 22, }), ],
                                  spacing: { after: 600 },
                                 }));
@@ -571,4 +571,5 @@
 </script>
 </body>
 </html>
+
 
