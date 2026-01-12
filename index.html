@@ -508,7 +508,7 @@
           { type: TabStopType.LEFT, position: 3300 },
           { type: TabStopType.LEFT, position: 6600 },
         ],
-        children: [new TextRun({ text: footerLineParts.join('\t'), size: 26 })],
+        children: [new TextRun({ text: footerLineParts.join('\t'), size: 28 })],
         spacing: { before: 300, after: 300 }
       }));
     }
@@ -563,8 +563,7 @@
     const formattedDate = today.toISOString().split('T')[0];
     const rawBorrower = document.getElementById('borrowerNameInput').value || '';
     const safeBorrower = (rawBorrower.trim() || '未填借方').replace(/[\\\/:*?"<>|]/g, '');
-    // ✅ 檔名避免 "/" 造成下載問題
-    const fileName = `設備-耗材借出單_${safeBorrower}_${formattedDate}.docx`;
+    const fileName = `設備/耗材借出單_${safeBorrower}_${formattedDate}.docx`;
 
     try {
       // 先上傳雲端
@@ -587,3 +586,4 @@
 </script>
 </body>
 </html>
+
