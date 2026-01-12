@@ -519,7 +519,13 @@
           { type: TabStopType.LEFT, position: 1500 },
           { type: TabStopType.LEFT, position: 4500 },
         ],
-        children: [new TextRun({ text: footerLineParts.join('\t'), size: 28 })],
+      children: [
+        new TextRun({ text: `借出人：${globalBorrower}`, size: 26 }),
+        new TextRun({ text: '\t', size: 26 }),
+        new TextRun({ text: `借出日期：${globalBorrowDate}`, size: 26 }),
+        new TextRun({ text: '\t', size: 26 }),
+        new TextRun({ text: `歸還日期：${globalReturnDate}`, size: 26 }),
+      ],
         spacing: { before: 300, after: 300 }
       }));
     }
@@ -597,6 +603,7 @@
 </script>
 </body>
 </html>
+
 
 
 
