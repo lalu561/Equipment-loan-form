@@ -486,16 +486,12 @@
       children.push(new Paragraph({
         tabStops: [
           { type: TabStopType.LEFT, position: 0 },     // 類別
-          { type: TabStopType.LEFT, position: 2000 },  // 項目
-          { type: TabStopType.LEFT, position: 6500 },  // 序號
-          { type: TabStopType.LEFT, position: 11500 },  // 數量
+          { type: TabStopType.LEFT, position: 1000 },  // 項目
+          { type: TabStopType.LEFT, position: 3000 },  // 序號
+          { type: TabStopType.LEFT, position: 7000 },  // 數量
         ],
-        children: [
-          new TextRun({
-            text: line1Parts.join('\t'),
-            size: 26
-          })
-        ]
+        children: [new TextRun({ text: footerLineParts.join(' \t'), size: 26 })],
+          spacing: { before: 300, after: 300 }
       }));
     });
 
@@ -597,6 +593,7 @@
 </script>
 </body>
 </html>
+
 
 
 
