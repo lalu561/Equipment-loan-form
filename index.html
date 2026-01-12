@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
@@ -91,9 +91,34 @@
 </head>
 <body>
 
-<div style="margin-bottom: 10px;">
-  借方：
-  <input type="text" id="borrowerNameInput" placeholder="請輸入借方名稱" style="padding: 6px; font-size: 14px; width: 200px;" />
+<!-- ✅ 借方 +（靠右）借出人/借出日期/歸還日期：只顯示一次 -->
+<div style="margin-bottom: 10px; display:flex; align-items:center; gap:12px; flex-wrap: wrap;">
+  <div style="display:flex; align-items:center; gap:8px;">
+    借方：
+    <input type="text" id="borrowerNameInput" placeholder="請輸入借方名稱" style="padding: 6px; font-size: 14px; width: 200px;" />
+  </div>
+
+  <div style="margin-left:auto; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+    <div class="borrower-wrapper">
+      借出人:
+      <select id="globalBorrower" class="borrower-select">
+        <option value="" selected></option>
+        <option>Stanley</option>
+        <option>Albert</option>
+        <option>Tim</option>
+      </select>
+    </div>
+
+    <div class="borrow-date-wrapper">
+      借出日期:
+      <input type="text" id="globalBorrowDate" class="borrow-date" placeholder="請選擇日期" />
+    </div>
+
+    <div class="return-date-wrapper">
+      歸還日期:
+      <input type="text" id="globalReturnDate" class="return-date" placeholder="請選擇日期" />
+    </div>
+  </div>
 </div>
 
 <div id="container"></div>
@@ -216,26 +241,6 @@
           </select>
         </div>
 
-        <div class="borrower-wrapper" style="margin-left:20px;">
-          借出人:
-          <select class="borrower-select">
-            <option value="" selected></option>
-            <option>Stanley</option>
-            <option>Albert</option>
-            <option>Tim</option>
-          </select>
-        </div>
-
-        <div class="borrow-date-wrapper" style="margin-left:20px;">
-          借出日期:
-          <input type="text" class="borrow-date" placeholder="請選擇日期" />
-        </div>
-
-        <div class="return-date-wrapper" style="margin-left:20px;">
-          歸還日期:
-          <input type="text" class="return-date" placeholder="請選擇日期" />
-        </div>
-
         <button class="btnDelete">✖ 刪除欄位</button>
       </div>
     `;
@@ -296,12 +301,12 @@
       container.removeChild(group);
       selections[idx] = null;
     });
+  }
 
-    // 初始化日期
-    if (typeof flatpickr === 'function') {
-      flatpickr(group.querySelector('.borrow-date'), { dateFormat: "Y-m-d", locale: "zh" });
-      flatpickr(group.querySelector('.return-date'), { dateFormat: "Y-m-d", locale: "zh" });
-    }
+  /* ✅ 全域日期只初始化一次 */
+  if (typeof flatpickr === 'function') {
+    flatpickr(document.getElementById('globalBorrowDate'), { dateFormat: "Y-m-d", locale: "zh" });
+    flatpickr(document.getElementById('globalReturnDate'), { dateFormat: "Y-m-d", locale: "zh" });
   }
 
   /* === 第二層點擊 === */
@@ -378,6 +383,11 @@
 
     btn.disabled = true;
     btn.textContent = '上傳中...';
+
+    // ✅ 全域借出資訊（只輸出一次）
+    const globalBorrower   = document.getElementById('globalBorrower')?.value || '';
+    const globalBorrowDate = document.getElementById('globalBorrowDate')?.value || '';
+    const globalReturnDate = document.getElementById('globalReturnDate')?.value || '';
 
     // 讀 LOGO（GitHub raw）
     const logoUrl = 'https://raw.githubusercontent.com/lalu561/Equipment-loan-form/main/Arcanum%20logo.png';
@@ -458,12 +468,9 @@
     selections.forEach((sel, idx) => {
       if (!sel) return;
       const group = container.querySelector(`.group[data-idx="${idx}"]`);
-      
+
       if (!group) return;
 
-      const borrower = group.querySelector('.borrower-select')?.value || '';
-      const borrowDate = group.querySelector('.borrow-date')?.value || '';
-      const returnDate = group.querySelector('.return-date')?.value || '';
       const qty = group.querySelector('.quantity-select')?.value || '';
 
       count++;
@@ -479,16 +486,6 @@
       children.push(new Paragraph({
         children: [new TextRun({ text: line1Parts.join('\t'), size: 26 })]
       }));
-
-      const line2Parts = [];
-      if (borrower) line2Parts.push(`借出人：${borrower}`);
-      if (borrowDate) line2Parts.push(`借出日期：${borrowDate}`);
-      if (returnDate) line2Parts.push(`歸還日期：${returnDate}`);
-
-      children.push(new Paragraph({
-        children: [new TextRun({ text: line2Parts.join('\t'), size: 26 })]
-      }));
-
     });
 
     if (count === 0) {
@@ -496,7 +493,25 @@
       btn.disabled = false;
       btn.textContent = originalText;
       return;
-    }   
+    }
+
+    // ✅ 放在所有項目結束後（只顯示一次）
+    const footerLineParts = [];
+    if (globalBorrower) footerLineParts.push(`借出人：${globalBorrower}`);
+    if (globalBorrowDate) footerLineParts.push(`借出日期：${globalBorrowDate}`);
+    if (globalReturnDate) footerLineParts.push(`歸還日期：${globalReturnDate}`);
+
+    if (footerLineParts.length) {
+      children.push(new Paragraph({
+        tabStops: [
+          { type: TabStopType.LEFT, position: 0 },
+          { type: TabStopType.LEFT, position: 3300 },
+          { type: TabStopType.LEFT, position: 6600 },
+        ],
+        children: [new TextRun({ text: footerLineParts.join('\t'), size: 26 })],
+        spacing: { before: 300, after: 300 }
+      }));
+    }
 
     children.push(new Paragraph({children:[new TextRun({text: '※於借期間如有損壞以致維修或報廢，借方需依損壞情形原價賠償', size: 22 }), ],
                                  spacing: { before: 400 },
@@ -504,7 +519,7 @@
     children.push(new Paragraph({children:[new TextRun({text: '※借方簽收借出單，視為同意上述說明', size: 22, }), ],
                                  spacing: { after: 600 },
                                 }));
-    
+
     children.push(new Paragraph({}));
     children.push(new Paragraph({
       tabStops: [
@@ -548,7 +563,8 @@
     const formattedDate = today.toISOString().split('T')[0];
     const rawBorrower = document.getElementById('borrowerNameInput').value || '';
     const safeBorrower = (rawBorrower.trim() || '未填借方').replace(/[\\\/:*?"<>|]/g, '');
-    const fileName = `設備/耗材借出單_${safeBorrower}_${formattedDate}.docx`;
+    // ✅ 檔名避免 "/" 造成下載問題
+    const fileName = `設備-耗材借出單_${safeBorrower}_${formattedDate}.docx`;
 
     try {
       // 先上傳雲端
