@@ -563,7 +563,7 @@
     const formattedDate = today.toISOString().split('T')[0];
     const rawBorrower = document.getElementById('borrowerNameInput').value || '';
     const safeBorrower = (rawBorrower.trim() || '未填借方').replace(/[\\\/:*?"<>|]/g, '');
-    const fileName = `設備/耗材借出單_${safeBorrower}_${formattedDate}.docx`;
+    const fileName = `設備^耗材借出單_${safeBorrower}_${formattedDate}.docx`;
 
     try {
       // 先上傳雲端
@@ -586,4 +586,5 @@
 </script>
 </body>
 </html>
+
 
