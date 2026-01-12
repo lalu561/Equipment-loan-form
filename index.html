@@ -458,6 +458,9 @@
     selections.forEach((sel, idx) => {
       if (!sel) return;
       const group = container.querySelector(`.group[data-idx="${idx}"]`);
+      const borrower = group.querySelector('.borrower-select')?.value || '';
+      const borrowDate = group.querySelector('.borrow-date')?.value || '';
+      const returnDate = group.querySelector('.return-date')?.value || '';
       if (!group) return;
 
       const qty = group.querySelector('.quantity-select')?.value || '';
@@ -475,6 +478,17 @@
       children.push(new Paragraph({
         children: [new TextRun({ text: line1Parts.join('\t'), size: 26 })]
       }));
+
+      const line2Parts = [];
+      if (borrower) line2Parts.push(`借出人：${borrower}`);
+      if (borrowDate) line2Parts.push(`借出日期：${borrowDate}`);
+      if (returnDate) line2Parts.push(`歸還日期：${returnDate}`);
+
+      children.push(new Paragraph({
+        children: [new TextRun({ text: line2Parts.join('\t'), size: 26 })]
+      }));
+
+      
     });
 
     if (count === 0) {
@@ -482,21 +496,7 @@
       btn.disabled = false;
       btn.textContent = originalText;
       return;
-    }
-
-    const firstGroup = container.querySelector('.group');
-    const borrower = group.querySelector('.borrower-select')?.value || '';
-    const borrowDate = group.querySelector('.borrow-date')?.value || '';
-    const returnDate = group.querySelector('.return-date')?.value || '';
-
-    const infoParts = [];
-    if (borrower) infoParts.push(`借出人：${borrower}`);
-    if (borrowDate) infoParts.push(`借出日期：${borrowDate}`);
-    if (returnDate) infoParts.push(`歸還日期：${returnDate}`);
-
-    children.push(new Paragraph({
-      children: [new TextRun({ text: infoParts.join('\t'), size: 26 })]
-    }));    
+    }   
 
     children.push(new Paragraph({children:[new TextRun({text: '※於借期間如有損壞以致維修或報廢，借方需依損壞情形原價賠償', size: 22 }), ],
                                  spacing: { before: 400 },
@@ -571,5 +571,6 @@
 </script>
 </body>
 </html>
+
 
 
