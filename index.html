@@ -450,7 +450,7 @@
 
     const borrowerName = (document.getElementById('borrowerNameInput').value || '').trim() || '______________';
     children.push(new Paragraph({
-      children: [new TextRun({ text: `借方：${borrowerName}`, size: 32 })],
+      children: [new TextRun({ text: `借方：${borrowerName}`, size: 28 })],
       spacing: { after: 200 }
     }));
 
@@ -467,7 +467,7 @@
 
       count++;
 
-      children.push(new Paragraph({ children: [new TextRun({ text: `第 ${count} 項：`, size: 28 })] }));
+      children.push(new Paragraph({ children: [new TextRun({ text: `第 ${count} 項：`, size: 26 })] }));
 
       const line1Parts = [];
       if (sel.level1) line1Parts.push(`類別：${sel.level1}`);
@@ -476,7 +476,7 @@
       if (qty) line1Parts.push(`數量：${qty}`);
 
       children.push(new Paragraph({
-        children: [new TextRun({ text: line1Parts.join('\t'), size: 28 })]
+        children: [new TextRun({ text: line1Parts.join('\t'), size: 26 })]
       }));
 
       const line2Parts = [];
@@ -485,7 +485,7 @@
       if (returnDate) line2Parts.push(`歸還日期：${returnDate}`);
 
       children.push(new Paragraph({
-        children: [new TextRun({ text: line2Parts.join('\t'), size: 28 })],
+        children: [new TextRun({ text: line2Parts.join('\t'), size: 26 })],
         spacing: { after: 300 }
       }));
     });
@@ -504,7 +504,7 @@
         { type: TabStopType.RIGHT, position: 9000 },
       ],
       children: [
-        new TextRun({ text: `\t借方簽章：______________`, size: 32 }),
+        new TextRun({ text: `\t借方簽章：______________`, size: 28 }),
       ],
       spacing: { before: 1000 }
     }));
@@ -563,6 +563,3 @@
 </script>
 </body>
 </html>
-
-
-
