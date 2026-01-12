@@ -458,11 +458,12 @@
     selections.forEach((sel, idx) => {
       if (!sel) return;
       const group = container.querySelector(`.group[data-idx="${idx}"]`);
+      
+      if (!group) return;
+
       const borrower = group.querySelector('.borrower-select')?.value || '';
       const borrowDate = group.querySelector('.borrow-date')?.value || '';
       const returnDate = group.querySelector('.return-date')?.value || '';
-      if (!group) return;
-
       const qty = group.querySelector('.quantity-select')?.value || '';
 
       count++;
@@ -488,7 +489,6 @@
         children: [new TextRun({ text: line2Parts.join('\t'), size: 26 })]
       }));
 
-      
     });
 
     if (count === 0) {
@@ -571,6 +571,7 @@
 </script>
 </body>
 </html>
+
 
 
 
