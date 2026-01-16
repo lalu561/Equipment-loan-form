@@ -223,7 +223,7 @@
     group.dataset.idx = idx;
     group.innerHTML = `
       <div class="dropdown">
-        <button class="dropbtn">選單</button>
+        <button class="dropbtn">請選擇</button>
         <div class="dropdown-content">
           ${Object.keys(categoryMap).map(key => `<span data-group="${idx}" data-value="${key}">${key}</span>`).join('')}
         </div>
@@ -593,12 +593,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
